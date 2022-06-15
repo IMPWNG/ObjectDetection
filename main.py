@@ -1,4 +1,5 @@
-import cv2 
+import cv2
+
 from gui_buttons import Buttons
 
 #OpenCV DNN
@@ -22,11 +23,10 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
 #Initialize buttons
 button_classes = Buttons()
-button_classes.add_button("Person", 10, 10)
-#put the botton bellow the previous one
-button_classes.add_button("Car", 10, 70)
-
-
+# button_classes.add_button("Person", 10, 10)
+# button_classes.add_button("Car", 10, 70)
+button_classes.add_button("Bicycle", 10, 10)
+   
 def click_event(event, x, y, flags, params):
     global button_classes
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -41,8 +41,7 @@ while True:
     #Get frame
     ret, frame = cap.read()
     #Get active buttons list
-    active_buttons = button_classes.active_buttons_list() 
-    print("Active buttons: ", active_buttons)
+    active_buttons = button_classes.active_buttons_list()
     
     #Object detection
     (class_ids, scores, bboxes) = model.detect(frame)
@@ -65,6 +64,9 @@ while True:
         #Draw label
         cv2.putText(frame, class_name, (x, y - 5), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        
+        # Screeshot when "bike" is detected
+        
         
     
     #Button to close the window
